@@ -7,15 +7,27 @@ except:
 	print('unable to import one or more of your libraries')
 	exit(0)
 
-#####################################################
 # DEBUG-ish:
 v = True
 
+# Danger, Will Robinson!
 def errorOut(CMD):
-	print("A really significant problem occurred and %s is exiting." % (CMD))
+	print("A significant problem occurred and %s is exiting." % (CMD))
+	print("Usage:")
+	print("%s /path/to/routers.list /path/to/userinfo.cfg" % (CMD))
+	print("Note:")
+	print("Make sure that your passwords are base64 encoded:")
+	print(">>> import base64")
+	print(">>> base64.b64encode('password')")
+	print("'cGFzc3dvcmQ='")
+	print("To verify the password: ")
+	print(">>> base64.b64decode('cGFzc3dvcmQ=')")
+	print("'password'")
 	exit(0)
-
-CMD=sys.argv[0]
+try:
+	CMD=sys.argv[0]
+except:
+	CMD='cisco-config-puller'
 
 if (len(sys.argv) == 3):
 	if (v == True):
@@ -24,7 +36,6 @@ else:
 	if (v == True):
 		print("Incorrect number of arguments.")
 	errorOut(CMD)
-exit(0)
 
 try:
 	routerlist = sys.argv[1]
@@ -79,16 +90,9 @@ def runner(SName, SAddr):
 					if v == True:
 						print("PassWord2 set")
 				else:
+					print("Unable to obtain username/passwords from file: %s" % (passlist))
 					break
 	except:
-		print("Unable to obtain username/passwords from file: %s" % (passlist))
-		print("Make sure that your passwords are base64 encoded:")
-		print(">>> import base64")
-		print(">>> base64.b64encode('password')")
-		print("'cGFzc3dvcmQ='")
-		print("To verify the password: ")
-		print(">>> base64.b64decode('cGFzc3dvcmQ=')")
-		print("'password'")
 		errorOut(CMD)
 	passfile.close()
 	#####################################################
@@ -228,7 +232,7 @@ def runner(SName, SAddr):
 			else:
 				print("\n")
 		except:
-			print('boo, dirty tftp and ssh connectivity!')
+			print('boo, dirty ssh connectivity!')
 		child.logfile = sys.stdout
 		time.sleep(1)
 		child.sendline('')
