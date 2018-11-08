@@ -17,6 +17,15 @@ def errorOut(CMD):
 
 CMD=sys.argv[0]
 
+if (len(sys.argv) == 3):
+	if (v == True):
+		print("Correct number of arguments provided.")
+else:
+	if (v == True):
+		print("Incorrect number of arguments.")
+	errorOut(CMD)
+exit(0)
+
 try:
 	routerlist = sys.argv[1]
 	if (v == True):
